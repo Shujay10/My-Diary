@@ -38,6 +38,6 @@ public class TT_ClassesStruct {
     @NonNull
     @Override
     public String toString() {
-        return day;
+        return day+" "+periods.get(0);
     }
 }

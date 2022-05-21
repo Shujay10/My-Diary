@@ -1,8 +1,12 @@
 package com.example.mydiary.ui.event;
 
+import static java.time.LocalTime.parse;
+
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.mydiary.EventRvAdapter;
 import com.example.mydiary.EventStruct;
@@ -32,7 +37,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,6 +57,7 @@ public class Event extends Fragment {
     FirebaseDatabase mDatabase;
     final String url = "https://my-diary-fb6a1-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -64,13 +73,24 @@ public class Event extends Fragment {
         setAdapter();
 
         fetchData();
+        try {
+            remEvent();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onRefresh() {
                 refreshLayout.setRefreshing(false);
                 fetchData();
-                remEvent();
+                try {
+                    remEvent();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
@@ -119,22 +139,18 @@ public class Event extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("SimpleDateFormat")
-    private void remEvent() {
+    private void remEvent() throws ParseException {
 
+        System.out.println("******Hi*******");
         DatabaseReference reference = mDatabase.getReference("Shemford").child("Events");
 
-        Date date = new Date();
+        Date current = new Date();
 
-        SimpleDateFormat formatter;
-        formatter = new SimpleDateFormat("dd/MM/yyyy_hh:mm:ss");
-        String strDate= formatter.format(date);
 
-        String[] split_time = strDate.split("_");
-        String[] time = split_time[1].split(":");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-        int sys_hrs = Integer.parseInt(time[0]);
-        int sys_min = Integer.parseInt(time[1]);
 
         reference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
@@ -143,22 +159,21 @@ public class Event extends Fragment {
                 for(DataSnapshot snapshot1 : snapshot.getChildren()){
                     EventStruct sub = snapshot1.getValue(EventStruct.class);
 
+                    Date ending_time = null;
                     String dt = sub.getEnd();
 
-                    String[] gt_time = dt.split("_");
-                    String[] note_time = gt_time[1].split(":");
-
-                    int not_hrs = Integer.parseInt(note_time[0]);
-                    int not_min = Integer.parseInt(note_time[1]);
-
-                    if(gt_time[0].equals(split_time[0])){
-                        if(not_min >= sys_min || not_hrs>=sys_hrs){
-                            if(not_hrs>=sys_hrs ){
-                                reference.child(sub.getTitle()).removeValue();
-                                adapter.notifyDataSetChanged();
-                            }
-                        }
+                    try {
+                        ending_time = format.parse(dt);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
+
+                    if(current.after(ending_time) || ending_time.equals(current)){
+                        System.out.println("After");
+                        //reference.child(sub.getTitle()).removeValue();
+                        //adapter.notifyDataSetChanged();
+                    }
+
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -168,9 +183,6 @@ public class Event extends Fragment {
 
             }
         });
-
-        //fetchData();
-        //checkIf_empty();
 
     }
 

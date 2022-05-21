@@ -34,12 +34,14 @@ public class TT_DaysRvAdapter extends RecyclerView.Adapter<TT_DaysRvAdapter.Exam
     Context ctx;
     String day;
 
+    static boolean flag = true;
+
     TT_ClassesRvAdapter adapter;
 
     TT_ClassesStruct temp = new TT_ClassesStruct();
 
     FirebaseFirestore mStore = FirebaseFirestore.getInstance();
-    String[] days = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
+
     ArrayList<TT_ClassesStruct> fetchedData = new ArrayList<>();
 
     public TT_DaysRvAdapter(ArrayList<String> list, Context ctx,RecyclerView cll) {
@@ -68,7 +70,7 @@ public class TT_DaysRvAdapter extends RecyclerView.Adapter<TT_DaysRvAdapter.Exam
             @Override
             public void onClick(View view) {
                 day = holder.days.getText().toString();
-                System.out.println(day);
+                //System.out.println(day);
                 storeClass(day);
                 setAdapterClass(holder);
             }
@@ -80,8 +82,8 @@ public class TT_DaysRvAdapter extends RecyclerView.Adapter<TT_DaysRvAdapter.Exam
         listcls.clear();
 
         //System.out.println(day+" == ");
-
-        for(int i=0;i<5;i++){
+          
+        for(int i=0;i<6;i++){
             temp = fetchedData.get(i);
             //System.out.println(temp.getDay());
             if(temp.getDay().equals(day)){
@@ -90,76 +92,39 @@ public class TT_DaysRvAdapter extends RecyclerView.Adapter<TT_DaysRvAdapter.Exam
                 //break;
             }
         }
-/*
-        switch (day){
-            case "Monday":
-            {
-                listcls.add("Maths");
 
-
-
-                break;
-            }
-            case "Tuesday":
-            {
-                listcls.add("Tamil");
-                break;
-            }
-            case "Wednesday":
-            {
-                listcls.add("Weather");
-                break;
-            }
-            case "Thursday":
-            {
-                listcls.add("Telegu");
-                break;
-            }
-            case "Friday":
-            {
-                listcls.add("French");
-                break;
-            }
-            case "Saturday":
-            {
-                listcls.add("Sanskrit");
-                break;
-            }
-            default:
-            {
-                listcls.clear();
-                break;
-            }
-        }
-*/
     }
 
     void getData(){
 
-        String TAG = "IN getData";
+        if(flag){
+            ArrayList<TT_ClassesStruct> data = new ArrayList<>();
+            String TAG = "IN getData";
+            String[] days = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
+            for(int i=0;i<6;i++){
+                mStore.collection("Shemford").document("Timetable")
+                        .collection("Class "+Student.getGrade()).document(days[i]).get()
+                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                TT_ClassesStruct temp = documentSnapshot.toObject(TT_ClassesStruct.class);
+                                fetchedData.add(temp);
+                                System.out.println(temp);
 
-        for(int i=0;i<6;i++){
-            mStore.collection("Shemford").document("Timetable")
-                    .collection("Class "+Student.getGrade()).document(days[i]).get()
-                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            TT_ClassesStruct temp = documentSnapshot.toObject(TT_ClassesStruct.class);
-                            fetchedData.add(temp);
+                            }
+                        });
 
-                            //System.out.println(temp);
-
-                        }
-                    });
-
+            }
         }
 
 
+       // flag = false;
+
+        //Classes.setFetchedData(data);
 
     }
 
     private void setAdapterClass(@NonNull ExampleHolder holder){
-
 
         adapter = new TT_ClassesRvAdapter(listcls);
         RecyclerView.LayoutManager layoutManager;
