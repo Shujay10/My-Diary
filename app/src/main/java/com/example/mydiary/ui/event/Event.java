@@ -1,9 +1,7 @@
 package com.example.mydiary.ui.event;
 
-import static java.time.LocalTime.parse;
 
 import androidx.annotation.RequiresApi;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
@@ -24,26 +22,19 @@ import android.widget.Toast;
 
 import com.example.mydiary.EventRvAdapter;
 import com.example.mydiary.EventStruct;
-import com.example.mydiary.HomeWorkStruct;
-import com.example.mydiary.HomeworkRvAdapter;
 import com.example.mydiary.R;
-import com.example.mydiary.Student;
 import com.example.mydiary.databinding.FragmentEventBinding;
-import com.example.mydiary.databinding.FragmentHomeBinding;
-import com.example.mydiary.ui.home.HomeViewModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
 
 public class Event extends Fragment {
 
@@ -68,11 +59,13 @@ public class Event extends Fragment {
         mDatabase  = FirebaseDatabase.getInstance(url);
         announcement = root.findViewById(R.id.eventRview);
         refreshLayout = root.findViewById(R.id.reload);
-        list = new ArrayList<EventStruct>();
+        list = new ArrayList<>();
 
         setAdapter();
-
         fetchData();
+
+        checkIf_empty();
+
         try {
             remEvent();
         } catch (ParseException e) {
@@ -85,6 +78,7 @@ public class Event extends Fragment {
             public void onRefresh() {
                 refreshLayout.setRefreshing(false);
                 fetchData();
+                checkIf_empty();
                 try {
                     remEvent();
                 } catch (ParseException e) {
@@ -94,21 +88,12 @@ public class Event extends Fragment {
             }
         });
 
-        //storeStatic();
-
         return root;
     }
 
     private void checkIf_empty() {
-
-        if(list.isEmpty()){
-            list.add(new EventStruct("No Event",".","____","____"));
-        }else {
-            list.clear();
-        }
-
-        adapter.notifyDataSetChanged();
-        //store();
+        if(list.isEmpty())
+            Toast.makeText(getContext(), " No Events ", Toast.LENGTH_LONG).show();
     }
 
     private void fetchData(){
@@ -116,9 +101,9 @@ public class Event extends Fragment {
         list.clear();
 
         DatabaseReference reference = mDatabase.getReference("Shemford").child("Events");
-                //.child("Class_"+ Student.getGrade());
 
         reference.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot snapshot1 : snapshot.getChildren()){
@@ -139,11 +124,9 @@ public class Event extends Fragment {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @SuppressLint("SimpleDateFormat")
     private void remEvent() throws ParseException {
 
-        System.out.println("******Hi*******");
+        //System.out.println("******Hi*******");
         DatabaseReference reference = mDatabase.getReference("Shemford").child("Events");
 
         Date current = new Date();
@@ -153,7 +136,7 @@ public class Event extends Fragment {
 
 
         reference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot snapshot1 : snapshot.getChildren()){

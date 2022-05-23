@@ -1,6 +1,6 @@
 package com.example.mydiary.ui.timetable;
 
-import androidx.lifecycle.ViewModelProvider;
+
 
 import android.os.Bundle;
 
@@ -14,13 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
-import com.example.mydiary.EventRvAdapter;
-import com.example.mydiary.EventStruct;
+
 import com.example.mydiary.R;
 import com.example.mydiary.TT_DaysRvAdapter;
-import com.example.mydiary.databinding.FragmentEventBinding;
 import com.example.mydiary.databinding.FragmentTimeTableBinding;
 
 import java.util.ArrayList;
@@ -41,15 +38,23 @@ public class TimeTable extends Fragment {
         binding = FragmentTimeTableBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        days = root.findViewById(R.id.recycler_day);
-        classes = root.findViewById(R.id.recycler_class);
-        s_days = new ArrayList<String>();
-        s_classes = new ArrayList<String>();
+        //days = root.findViewById(R.id.recycler_day);
+        //classes = root.findViewById(R.id.recycler_class);
+        s_days = new ArrayList<>();
+        s_classes = new ArrayList<>();
+
+        //OldModel();
+
+        return root;
+    }
+
+
+
+
+    private void OldModel(){
 
         storeDays();
         setAdapterDays();
-
-        return root;
     }
 
     private void storeDays() {
