@@ -1,15 +1,13 @@
 package com.example.mydiary.ui.timetable;
 
 
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,19 +15,19 @@ import android.view.ViewGroup;
 
 
 import com.example.mydiary.R;
-import com.example.mydiary.TT_DaysRvAdapter;
+import com.example.mydiary.TabPager;
 import com.example.mydiary.databinding.FragmentTimeTableBinding;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
-public class TimeTable extends Fragment {
+public class TimeTable extends Fragment implements TabLayout.OnTabSelectedListener {
 
     private FragmentTimeTableBinding binding;
 
-    RecyclerView days;
-    RecyclerView classes;
-    ArrayList<String> s_days;
-    ArrayList<String> s_classes;
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    TabPager tabPager;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -38,44 +36,30 @@ public class TimeTable extends Fragment {
         binding = FragmentTimeTableBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        //days = root.findViewById(R.id.recycler_day);
-        //classes = root.findViewById(R.id.recycler_class);
-        s_days = new ArrayList<>();
-        s_classes = new ArrayList<>();
-
-        //OldModel();
+        init(root);
 
         return root;
     }
 
 
+    private void init(View root){
 
+        tabLayout = root.findViewById(R.id.tab);
+        tabLayout.addTab(tabLayout.newTab().setText("Mon"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tue"));
+        tabLayout.addTab(tabLayout.newTab().setText("Wed"));
+        tabLayout.addTab(tabLayout.newTab().setText("Thu"));
+        tabLayout.addTab(tabLayout.newTab().setText("Fri"));
+        tabLayout.addTab(tabLayout.newTab().setText("Sat"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-    private void OldModel(){
+        viewPager = root.findViewById(R.id.pager);
+        tabPager = new TabPager(getChildFragmentManager(),tabLayout.getTabCount());
 
-        storeDays();
-        setAdapterDays();
-    }
+        viewPager.setAdapter(tabPager);
 
-    private void storeDays() {
-        s_days.add("Monday");
-        s_days.add("Tuesday");
-        s_days.add("Wednesday");
-        s_days.add("Thursday");
-        s_days.add("Friday");
-        s_days.add("Saturday");
-        s_days.add("Clear");
-
-    }
-
-    private void setAdapterDays() {
-
-        TT_DaysRvAdapter adapter = new TT_DaysRvAdapter(s_days,getContext(),classes);
-        RecyclerView.LayoutManager layoutManager;
-        layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
-        days.setItemAnimator(new DefaultItemAnimator());
-        days.setLayoutManager(layoutManager);
-        days.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(this);
 
     }
 
@@ -86,4 +70,20 @@ public class TimeTable extends Fragment {
     }
 
 
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+
+        viewPager.setCurrentItem(tab.getPosition());
+
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
+    }
 }

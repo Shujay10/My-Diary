@@ -3,8 +3,6 @@ package com.example.mydiary;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class TT_ClassesStruct {
 
@@ -40,4 +38,5 @@ public class TT_ClassesStruct {
     public String toString() {
         return day+" "+periods.get(0);
     }
+
 }

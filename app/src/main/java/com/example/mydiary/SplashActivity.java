@@ -78,7 +78,7 @@ public class SplashActivity extends AppCompatActivity {
         list.add("Hindi_"+txt+cls);
         list.add("Reading Club_"+txt+cls);
 
-        TT_ClassesStruct stu = new TT_ClassesStruct(days[i],list);
+        ClassStruct stu = new ClassStruct(days[i],list);
 
         mStore.collection("Shemford")
                 .document("Timetable").collection("Class "+cls)

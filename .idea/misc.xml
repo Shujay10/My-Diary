@@ -20,12 +20,14 @@
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/drawable/ic_password.xml" value="0.2035" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/drawable/ic_phone.xml" value="0.2035" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/drawable/ic_school.xml" value="0.2035" />
+        <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/drawable/tab_bg.xml" value="0.1195" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/font/architects_daughter.xml" value="0.29444444444444445" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/activity_log_in.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/activity_main.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/activity_splash.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/activity_verify.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/app_bar_main.xml" value="0.27447916666666666" />
+        <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/classes_recycler.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/content_main.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/event_fragment.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/event_recycler.xml" value="0.4" />
@@ -34,13 +36,19 @@
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/fragment_logout.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/fragment_profile.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/fragment_slideshow.xml" value="0.27447916666666666" />
-        <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/fragment_time_table.xml" value="0.27447916666666666" />
+        <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/fragment_time_table.xml" value="0.1" />
+        <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/friday_fragment.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/homework_recycler.xml" value="0.264" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/logout_fragment.xml" value="0.27447916666666666" />
+        <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/monday_fragment.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/nav_header_main.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/personal_remarks_fragment.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/recycler_tt_classes.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/recycler_tt_day.xml" value="0.27447916666666666" />
+        <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/saturday_fragment.xml" value="0.27447916666666666" />
+        <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/thusday_fragment.xml" value="0.27447916666666666" />
+        <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/tuesday_fragment.xml" value="0.27447916666666666" />
+        <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/layout/wedneday_fragment.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/menu/activity_main_drawer.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/My Diary/app/src/main/res/menu/main.xml" value="0.27447916666666666" />
       </map>

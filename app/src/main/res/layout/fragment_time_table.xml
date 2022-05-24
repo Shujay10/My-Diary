@@ -38,10 +38,33 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.timetable.TimeTable"
-    android:background="#75329B"
-    android:orientation="vertical">
+    android:background="#EEF3D2"
+    android:orientation="vertical"
+    android:weightSum="2">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.15"
+        >
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            app:tabTextColor="@color/black"
+            app:tabBackground="@drawable/tab_bg"
+            app:tabSelectedTextColor="@color/white"
+            android:minHeight="?attr/actionBarSize"/>
+
+    </androidx.cardview.widget.CardView>
 
 
-
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.8"/>
 
 </LinearLayout>

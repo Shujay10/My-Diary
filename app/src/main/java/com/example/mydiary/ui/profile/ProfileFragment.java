@@ -1,7 +1,5 @@
 package com.example.mydiary.ui.profile;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,15 +13,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mydiary.Classes;
 import com.example.mydiary.R;
 import com.example.mydiary.Student;
-import com.example.mydiary.TT_ClassesStruct;
-import com.example.mydiary.databinding.FragmentHomeBinding;
 import com.example.mydiary.databinding.FragmentProfileBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,7 +25,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 public class ProfileFragment extends Fragment {
 
@@ -144,30 +136,6 @@ public class ProfileFragment extends Fragment {
         phone.setText(Student.getPhoNoP());
         school.setText(Student.getSchool());
 
-
-    }
-
-    void getData(){
-
-        ArrayList<TT_ClassesStruct> data = new ArrayList<>();
-        String TAG = "IN getData";
-        String[] days = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
-        for(int i=0;i<6;i++){
-            mStore.collection("Shemford").document("Timetable")
-                    .collection("Class "+Student.getGrade()).document(days[i]).get()
-                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            TT_ClassesStruct temp = documentSnapshot.toObject(TT_ClassesStruct.class);
-                            data.add(temp);
-                            //System.out.println(temp);
-
-                        }
-                    });
-
-        }
-
-        Classes.setFetchedData(data);
 
     }
 
