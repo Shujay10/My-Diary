@@ -56,6 +56,7 @@ public class GalleryFragment extends Fragment {
 
         list.add(new GalImgStruct(R.drawable.pon1));
 
+
     }
 
     void setAdapter(){
