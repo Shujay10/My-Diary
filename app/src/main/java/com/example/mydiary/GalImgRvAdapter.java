@@ -29,7 +29,7 @@ public class GalImgRvAdapter extends RecyclerView.Adapter<GalImgRvAdapter.Exampl
     @Override
     public void onBindViewHolder(@NonNull ExampleHolder holder, int position) {
 
-        holder.iView.setImageResource(list.get(position).getImage());
+        holder.iView.setImageBitmap(list.get(position).getImage());
 
     }
 
