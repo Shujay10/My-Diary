@@ -2,6 +2,8 @@ package com.example.mydiary;
 
 import androidx.annotation.NonNull;
 
+// Global Variables
+
 public class Student {
 
     static String name;

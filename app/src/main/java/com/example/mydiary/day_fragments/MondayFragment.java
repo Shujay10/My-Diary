@@ -11,8 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.mydiary.ClassStruct;
-import com.example.mydiary.ClassesRvAdapter;
+import com.example.mydiary.struct.ClassStruct;
+import com.example.mydiary.adapters.ClassesRvAdapter;
 import com.example.mydiary.R;
 import com.example.mydiary.Student;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -20,8 +20,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-
-import io.grpc.Context;
 
 
 public class MondayFragment extends Fragment {

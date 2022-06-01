@@ -1,12 +1,9 @@
 package com.example.mydiary.ui.home;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,16 +12,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mydiary.HomeWorkStruct;
-import com.example.mydiary.HomeworkRvAdapter;
+import com.example.mydiary.struct.HomeWorkStruct;
+import com.example.mydiary.adapters.HomeworkRvAdapter;
 import com.example.mydiary.R;
 
 
 import com.example.mydiary.Student;
 import com.example.mydiary.databinding.FragmentHomeBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

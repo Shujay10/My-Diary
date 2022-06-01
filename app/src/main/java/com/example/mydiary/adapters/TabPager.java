@@ -1,4 +1,4 @@
-package com.example.mydiary;
+package com.example.mydiary.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

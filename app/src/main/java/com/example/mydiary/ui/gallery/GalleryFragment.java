@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -14,20 +15,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.bumptech.glide.Glide;
-import com.example.mydiary.GalImgRvAdapter;
-import com.example.mydiary.GalImgStruct;
+import com.example.mydiary.adapters.GalImgRvAdapter;
+import com.example.mydiary.struct.GalImgStruct;
 import com.example.mydiary.R;
 import com.example.mydiary.databinding.FragmentGalleryBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class GalleryFragment extends Fragment {
@@ -36,6 +33,7 @@ public class GalleryFragment extends Fragment {
 
     RecyclerView rView;
     ImageView iView;
+    ProgressBar gallProgress;
     ArrayList<GalImgStruct> list;
 
     GalImgRvAdapter adapter;
@@ -52,6 +50,7 @@ public class GalleryFragment extends Fragment {
         View root = binding.getRoot();
 
         rView = root.findViewById(R.id.gallery_recycler);
+        gallProgress = root.findViewById(R.id.galPro);
         list = new ArrayList<>();
         aRef = new ArrayList<>();
         storage = FirebaseStorage.getInstance("gs://my-diary-fb6a1.appspot.com/");
@@ -59,11 +58,14 @@ public class GalleryFragment extends Fragment {
         getData();
         setAdapter();
 
+        // TODO : Storage issue , cache the image , Zooming , Filter
+
         return root;
     }
 
     private void getData() {
 
+        final long ONE_MEGABYTE = 1024 * 1024;
         StorageReference listRef = storage.getReference().child("Gallery");
 
         listRef.listAll()
@@ -101,6 +103,7 @@ public class GalleryFragment extends Fragment {
 
         //Glide.with(getContext()).load(aRef.get(0)).into(iView);
 
+/*
         for(int i=0;i<aRef.size();i++){
             try{
 
@@ -118,19 +121,47 @@ public class GalleryFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }*/
+
+        final long ONE_MEGABYTE = 1024 * 1024;
+
+        System.out.println(aRef.size());
+
+        for(int i=0;i<aRef.size();i++){
+
+            //StorageReference islandRef = storage.child(aRef.get(i));
+
+            aRef.get(i).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    // Data for "images/island.jpg" is returns, use this as needed
+                    int nh = (int) ( bmp.getHeight() * (512.0 / bmp.getWidth()) );
+                    Bitmap scaled = Bitmap.createScaledBitmap(bmp, 512, nh, true);
+                    list.add(new GalImgStruct(scaled));
+                    adapter.notifyDataSetChanged();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+
+
+            });
+
         }
-
-
 
     }
 
     void setAdapter(){
 
-        adapter = new GalImgRvAdapter(list);
+        adapter = new GalImgRvAdapter(list,gallProgress);
         StaggeredGridLayoutManager manager;
         manager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         rView.setLayoutManager(manager);
         rView.setAdapter(adapter);
+
     }
 
     @Override

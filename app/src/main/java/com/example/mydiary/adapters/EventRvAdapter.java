@@ -1,4 +1,4 @@
-package com.example.mydiary;
+package com.example.mydiary.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mydiary.struct.EventStruct;
+import com.example.mydiary.R;
 
 import java.util.ArrayList;
 

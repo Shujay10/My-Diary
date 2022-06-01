@@ -2,14 +2,13 @@ package com.example.mydiary;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mydiary.databinding.AppBarMainBinding;
+import com.example.mydiary.activities.LogInActivity;
+import com.example.mydiary.databinding.ActivityMainBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -19,7 +18,6 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.mydiary.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -28,11 +26,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -107,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(currentUser == null){
             Toast.makeText(MainActivity.this,"User Not Found",Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(MainActivity.this,LogInActivity.class));
+            startActivity(new Intent(MainActivity.this, LogInActivity.class));
         }else {
             try {
                 getVal();

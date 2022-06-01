@@ -10,10 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.example.mydiary.ClassStruct;
-import com.example.mydiary.ClassesRvAdapter;
+import com.example.mydiary.struct.ClassStruct;
+import com.example.mydiary.adapters.ClassesRvAdapter;
 import com.example.mydiary.R;
 import com.example.mydiary.Student;
 import com.google.android.gms.tasks.OnSuccessListener;

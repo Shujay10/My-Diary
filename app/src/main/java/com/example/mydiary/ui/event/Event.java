@@ -3,7 +3,6 @@ package com.example.mydiary.ui.event;
 
 import androidx.annotation.RequiresApi;
 
-import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -20,8 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.mydiary.EventRvAdapter;
-import com.example.mydiary.EventStruct;
+import com.example.mydiary.adapters.EventRvAdapter;
+import com.example.mydiary.struct.EventStruct;
 import com.example.mydiary.R;
 import com.example.mydiary.databinding.FragmentEventBinding;
 import com.google.firebase.database.DataSnapshot;

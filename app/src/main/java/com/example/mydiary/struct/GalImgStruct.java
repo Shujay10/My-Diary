@@ -1,4 +1,4 @@
-package com.example.mydiary;
+package com.example.mydiary.struct;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,7 +12,6 @@ public class GalImgStruct {
     }
 
     public GalImgStruct(Bitmap image) {
-
         this.image = image;
     }
 

@@ -1,18 +1,17 @@
-package com.example.mydiary;
+package com.example.mydiary.struct;
 
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 
-public class TT_ClassesStruct {
-
+public class ClassStruct {
     String day;
     ArrayList<String> periods;
 
-    public TT_ClassesStruct() {
+    public ClassStruct() {
     }
 
-    public TT_ClassesStruct(String day, ArrayList<String> periods) {
+    public ClassStruct(String day, ArrayList<String> periods) {
         this.day = day;
         this.periods = periods;
     }
@@ -38,5 +37,4 @@ public class TT_ClassesStruct {
     public String toString() {
         return day+" "+periods.get(0);
     }
-
 }

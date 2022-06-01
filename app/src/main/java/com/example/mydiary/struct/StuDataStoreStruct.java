@@ -1,6 +1,6 @@
-package com.example.mydiary;
+package com.example.mydiary.struct;
 
-public class StuDataStore {
+public class StuDataStoreStruct {
 
     String name;
     String phonePrimary;
@@ -10,11 +10,11 @@ public class StuDataStore {
     String regNo;
     String grade;
 
-    public StuDataStore() {
+    public StuDataStoreStruct() {
     }
 
-    public StuDataStore(String name, String phonePrimary, String phoneSecondary, String parentName,
-                        String email, String regNo, String grade) {
+    public StuDataStoreStruct(String name, String phonePrimary, String phoneSecondary, String parentName,
+                              String email, String regNo, String grade) {
         this.name = name;
         this.phonePrimary = phonePrimary;
         this.phoneSecondary = phoneSecondary;

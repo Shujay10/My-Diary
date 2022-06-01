@@ -14,11 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.mydiary.LogInActivity;
+import com.example.mydiary.activities.LogInActivity;
 import com.example.mydiary.R;
-import com.example.mydiary.databinding.FragmentGalleryBinding;
 import com.example.mydiary.databinding.FragmentLogoutBinding;
-import com.example.mydiary.ui.gallery.GalleryViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Logout extends Fragment {
@@ -53,6 +51,8 @@ public class Logout extends Fragment {
                 startActivity(intent);
             }
         });
+
+        // TODO : Clear the txt file
 
         return root;
     }
