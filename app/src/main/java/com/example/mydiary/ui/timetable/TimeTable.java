@@ -38,7 +38,6 @@ public class TimeTable extends Fragment implements TabLayout.OnTabSelectedListen
         return root;
     }
 
-
     private void init(View root){
 
         tabLayout = root.findViewById(R.id.tab);
@@ -65,7 +64,6 @@ public class TimeTable extends Fragment implements TabLayout.OnTabSelectedListen
         super.onDestroyView();
         binding = null;
     }
-
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {

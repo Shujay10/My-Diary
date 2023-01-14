@@ -91,6 +91,9 @@ public class Event extends Fragment {
     }
 
     private void checkIf_empty() {
+
+        //TODO : check firebase for event as****e !!!!
+
         if(list.isEmpty())
             Toast.makeText(getContext(), " No Events ", Toast.LENGTH_LONG).show();
     }

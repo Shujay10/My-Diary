@@ -1,19 +1,19 @@
 package com.example.mydiary;
 
-import androidx.annotation.NonNull;
-
 // Global Variables
 
 public class Student {
 
     static String name;
-    static String regnol;
+    static String regno;
     static String school;
     static String grade;
     static String email;
     static String phoNoP;
     static String phoNoS;
+    static String birthday;
     static String ParentsName;
+
 
     public static String getName() {
         return name;
@@ -23,12 +23,12 @@ public class Student {
         Student.name = name;
     }
 
-    public static String getRegnol() {
-        return regnol;
+    public static String getRegno() {
+        return regno;
     }
 
-    public static void setRegnol(String regnol) {
-        Student.regnol = regnol;
+    public static void setRegno(String regno) {
+        Student.regno = regno;
     }
 
     public static String getSchool() {
@@ -69,6 +69,14 @@ public class Student {
 
     public static void setPhoNoS(String phoNoS) {
         Student.phoNoS = phoNoS;
+    }
+
+    public static String getBirthday() {
+        return birthday;
+    }
+
+    public static void setBirthday(String birthday) {
+        Student.birthday = birthday;
     }
 
     public static String getParentsName() {

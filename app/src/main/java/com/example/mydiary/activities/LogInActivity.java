@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.mydiary.MainActivity;
 import com.example.mydiary.R;
+import com.example.mydiary.struct.StoreStruct;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -22,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 import java.io.OutputStreamWriter;
 
@@ -111,32 +114,41 @@ public class LogInActivity extends AppCompatActivity {
 
     private void setValues() {
 
-        DocumentReference docRef = mStore.collection(getSchool()).document("Student").collection("StudentList").document(getRegNo());
+        DocumentReference docRef = mStore.collection(getSchool())
+                .document("Human resources").collection("StudentList").document(getRegNo());
 
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                String name = (String) documentSnapshot.get("name");
-                String email1 = (String) documentSnapshot.get("email");
-                String phonePr = (String) documentSnapshot.get("phonePrimary");
-                String parNts = (String) documentSnapshot.get("parentName");
-                String grade = (String) documentSnapshot.get("grade");
-                String phoneSc = (String) documentSnapshot.get("phoneSecondary");
-                //System.out.println(email1+"  "+name+" "+phonePr+" "+parNts+" "+phoneSc+" "+grade);
-
-
                 if(documentSnapshot.exists()){
 
-                    //putValue(name,email1,phonePr,phoneSc,parNts,grade);
-                    putValue(email1);
+                    String name = (String) documentSnapshot.get("name");
+                    String email = (String) documentSnapshot.get("email");
+                    String grade = (String) documentSnapshot.get("grade");
+                    String phoNoP = (String) documentSnapshot.get("phPri");
+                    String phoNoS = (String) documentSnapshot.get("phSec");
+                    String birthday = (String) documentSnapshot.get("dateOfBirth");
+                    String ParentsName = (String) documentSnapshot.get("parentName");
+                    String regNo = (String) documentSnapshot.get("rollNo");
+                    String school = (String) documentSnapshot.get("school");
 
-                    //Toast.makeText(getApplicationContext(),"Data Found Firestore",Toast.LENGTH_SHORT).show();
+                    StoreStruct store = new StoreStruct(name,grade,email,phoNoP,phoNoS,birthday,ParentsName,regNo,school);
+
+                    Gson gson = new Gson();
+
+                    String storeUser = gson.toJson(store);
+                    SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("UserData",storeUser);
+                    editor.apply();
+
+                    putValue(email);
 
                 }else {
-                    boolean isGood = false;
+                    //boolean isGood = false;
                     proBar.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(),"Data Not Found Firestore",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"User Not Found",Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -144,7 +156,6 @@ public class LogInActivity extends AppCompatActivity {
 
     }
 
-    //private void putValue(String name, String email1, String phonePr, String phoneSc, String parNts, String grade) {
     private void putValue(String email1) {
 
         System.out.println(email1 +" == "+getEmail());
@@ -156,33 +167,15 @@ public class LogInActivity extends AppCompatActivity {
 
         if(isGood){
 
-            //Student.name = name;
-            //Student.email = email1;
-            //Student.phoNoP = phonePr;
-            //Student.phoNoS = phoneSc;
-            //Student.ParentsName = parNts;
-            //Student.grade = grade;
+            StoreStruct userData = new StoreStruct(getRegNo(),getSchool());
+            Gson gson = new Gson();
 
-            try {
+            String storeUser = gson.toJson(userData);
+            SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("RegSchool",storeUser);
+            editor.apply();
 
-                OutputStreamWriter out= new OutputStreamWriter(openFileOutput("Store.txt", 0));
-
-                out.write(getRegNo()+":"+getSchool());
-
-                out.close();
-
-                Toast.makeText(this, "The contents are saved in the file.", Toast.LENGTH_LONG).show();
-
-            }
-
-            catch (Throwable t) {
-
-                Toast.makeText(this, "Exception: "+t.toString(), Toast.LENGTH_LONG)
-                        .show();
-
-            }
-
-            //Toast.makeText(getApplicationContext(),"To auth",Toast.LENGTH_SHORT).show();
             auth();
         }else {
             Toast.makeText(getApplicationContext(),"Something wrong",Toast.LENGTH_SHORT).show();

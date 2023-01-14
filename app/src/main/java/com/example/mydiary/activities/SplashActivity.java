@@ -67,32 +67,32 @@ public class SplashActivity extends AppCompatActivity {
 
 
         //for(int x = 1;x<9;x++){
-           // cls = x;
-            for(int i=0;i<6;i++){
+        // cls = x;
+        for(int i=0;i<6;i++){
 
-                txt = let[i];
+            txt = let[i];
 
-                ArrayList<String> list = new ArrayList<>();
-                list.add("English_"+txt+cls);
-                list.add("Science_"+txt+cls);
-                list.add("Tamil_"+txt+cls);
-                list.add("PT_"+txt+cls);
-                list.add("Social_"+txt+cls);
-                list.add("Maths_"+txt+cls);
-                list.add("Hindi_"+txt+cls);
-                list.add("Reading Club_"+txt+cls);
+            ArrayList<String> list = new ArrayList<>();
+            list.add("English_"+txt+cls);
+            list.add("Science_"+txt+cls);
+            list.add("Tamil_"+txt+cls);
+            list.add("PT_"+txt+cls);
+            list.add("Social_"+txt+cls);
+            list.add("Maths_"+txt+cls);
+            list.add("Hindi_"+txt+cls);
+            list.add("Reading Club_"+txt+cls);
 
-                ClassStruct stu = new ClassStruct(days[i],list);
+            ClassStruct stu = new ClassStruct(days[i],list);
 
-                mStore.collection("Shemford")
-                        .document("Timetable").collection("Class "+cls)
-                        .document(days[i]).set(stu);
+            mStore.collection("Shemford")
+                    .document("Timetable").collection("Class "+cls)
+                    .document(days[i]).set(stu);
 
-                if(i==5){
-                    Toast.makeText(getApplicationContext(),"Stored "+cls,Toast.LENGTH_SHORT).show();
-                }
-
+            if(i==5){
+                Toast.makeText(getApplicationContext(),"Stored "+cls,Toast.LENGTH_SHORT).show();
             }
+
+        }
         //}
 
 

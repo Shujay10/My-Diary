@@ -48,7 +48,7 @@ public class SaturdayFragment extends Fragment {
 
     private void fetch_Data(){
 
-        mStore.collection("Shemford").document("Timetable")
+        mStore.collection(Student.getSchool()).document("Timetable")
                 .collection("Class "+ Student.getGrade()).document("Saturday").get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override

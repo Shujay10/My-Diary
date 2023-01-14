@@ -104,11 +104,11 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this,"User Not Found",Toast.LENGTH_SHORT).show();
             startActivity(new Intent(MainActivity.this, LogInActivity.class));
         }else {
-            try {
-                getVal();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                getVal();
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
             Toast.makeText(MainActivity.this,"User Found",Toast.LENGTH_SHORT).show();
         }
 
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 in.close();
                 String get = buf.toString();
                 String[] splitting = get.split(":");
-                Student.regnol = splitting[0];
+                Student.regno = splitting[0];
                 Student.school = splitting[1];
 
             }
@@ -145,8 +145,8 @@ public class MainActivity extends AppCompatActivity {
 
         String sch = Student.school;
 
-        DocumentReference docRef = mStore.collection(sch).document("Student")
-                .collection("StudentList").document(Student.regnol);
+        DocumentReference docRef = mStore.collection(sch).document("Human resources")
+                .collection("StudentList").document(Student.regno);
 
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }else {
                     boolean isGood = false;
-                    Toast.makeText(getApplicationContext(),"Data Not Found Firestore",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"User Not Found",Toast.LENGTH_SHORT).show();
                 }
 
             }

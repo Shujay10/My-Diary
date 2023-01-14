@@ -1,10 +1,16 @@
 package com.example.mydiary.ui.profile;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,22 +22,22 @@ import android.widget.Toast;
 import com.example.mydiary.R;
 import com.example.mydiary.Student;
 import com.example.mydiary.databinding.FragmentProfileBinding;
+import com.example.mydiary.struct.StoreStruct;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
 
+    SwipeRefreshLayout refreshLayout;
+
     TextView name,grade,rollnum,email;
-    TextView parents,phone,school;
+    TextView parents,phone,birthday,school;
 
     ProgressBar progressBar;
 
@@ -45,58 +51,65 @@ public class ProfileFragment extends Fragment {
         View root = binding.getRoot();
 
         mStore = FirebaseFirestore.getInstance();
-        //getData();
+        refreshLayout = root.findViewById(R.id.profileReload);
+
         name = root.findViewById(R.id.proName);
         grade = root.findViewById(R.id.proClass);
         rollnum = root.findViewById(R.id.proRoll);
         email = root.findViewById(R.id.proEmail);
         parents = root.findViewById(R.id.proParent);
         phone = root.findViewById(R.id.proPhone);
+        birthday = root.findViewById(R.id.proBirthday);
         school = root.findViewById(R.id.proSchool);
         progressBar = root.findViewById(R.id.proPro_bar);
 
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onRefresh() {
+                refreshLayout.setRefreshing(false);
+                getValOnline();
 
-        try {
-            getVal();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+            }
+        });
+
+        getVal();
 
         return root;
     }
 
-    private void getVal() throws FileNotFoundException {
+    private void getVal(){
+        SharedPreferences prefs =  getContext().getSharedPreferences("UserData", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String usrDat = prefs.getString("UserData","");
+        StoreStruct tr1 = gson.fromJson(usrDat, StoreStruct.class);
 
-        try {
-            InputStream in = getActivity().openFileInput("Store.txt");
-            if (in != null) {
-                InputStreamReader tmp=new InputStreamReader(in);
-                BufferedReader reader=new BufferedReader(tmp);
-                String str;
-                StringBuilder buf=new StringBuilder();
+        Student.setName(tr1.getName());
+        Student.setEmail(tr1.getEmail());
+        Student.setRegno(tr1.getRegNo());
+        Student.setPhoNoP(tr1.getPhoNoP());
+        Student.setPhoNoS(tr1.getPhoNoS());
+        Student.setParentsName(tr1.getParentsName());
+        Student.setBirthday(tr1.getBirthday());
+        Student.setGrade(tr1.getGrade());
+        Student.setSchool(tr1.getSchool());
+        setVal();
 
-                while ((str = reader.readLine()) != null) {
-                    buf.append(str);
-                }
-                in.close();
-                String get = buf.toString();
-                String[] splitting = get.split(":");
-                Student.setRegnol(splitting[0]);
-                Student.setSchool(splitting[1]);
-                //System.out.println(buf);
-            }
-        }
-        catch (java.io.FileNotFoundException e) {
-        }
-        catch (Throwable t) {
+    }
 
+    private void getValOnline() {
 
-        }
+        SharedPreferences prefs =  getContext().getSharedPreferences("UserData", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String usrDat = prefs.getString("RegSchool","");
+        StoreStruct tr1 = gson.fromJson(usrDat, StoreStruct.class);
+        Student.setRegno(tr1.getRegNo());
+        Student.setSchool(tr1.getSchool());
 
         String sch = Student.getSchool();
 
-        DocumentReference docRef = mStore.collection(sch).document("Student")
-                .collection("StudentList").document(Student.getRegnol());
+        DocumentReference docRef = mStore.collection(sch).document("Human resources")
+                .collection("StudentList").document(Student.getRegno());
 
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -106,8 +119,9 @@ public class ProfileFragment extends Fragment {
 
                     Student.setName((String) documentSnapshot.get("name"));
                     Student.setEmail((String) documentSnapshot.get("email"));
-                    Student.setPhoNoP((String) documentSnapshot.get("phonePrimary"));
+                    Student.setPhoNoP((String) documentSnapshot.get("phPri"));
                     Student.setParentsName((String) documentSnapshot.get("parentName"));
+                    Student.setBirthday((String) documentSnapshot.get("dateOfBirth"));
                     Student.setGrade((String) documentSnapshot.get("grade"));
                     Student.setSchool(sch);
                     setVal();
@@ -130,10 +144,11 @@ public class ProfileFragment extends Fragment {
 
         grade.setText("Grade "+Student.getGrade()+"th");
 
-        rollnum.setText(Student.getRegnol());
+        rollnum.setText(Student.getRegno());
         email.setText(Student.getEmail());
         parents.setText(Student.getParentsName());
         phone.setText(Student.getPhoNoP());
+        birthday.setText(Student.getBirthday());
         school.setText(Student.getSchool());
 
 
