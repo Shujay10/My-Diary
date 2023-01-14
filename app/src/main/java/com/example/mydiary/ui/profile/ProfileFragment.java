@@ -115,21 +115,15 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                if(documentSnapshot.exists()){
-
-                    Student.setName((String) documentSnapshot.get("name"));
-                    Student.setEmail((String) documentSnapshot.get("email"));
-                    Student.setPhoNoP((String) documentSnapshot.get("phPri"));
-                    Student.setParentsName((String) documentSnapshot.get("parentName"));
-                    Student.setBirthday((String) documentSnapshot.get("dateOfBirth"));
-                    Student.setGrade((String) documentSnapshot.get("grade"));
-                    Student.setSchool(sch);
-                    setVal();
-
-                }else {
-                    boolean isGood = false;
-                    Toast.makeText(getContext(),"Data Not Found Firestore",Toast.LENGTH_SHORT).show();
-                }
+                // TODO : Store in cache
+                Student.setName((String) documentSnapshot.get("name"));
+                Student.setEmail((String) documentSnapshot.get("email"));
+                Student.setPhoNoP((String) documentSnapshot.get("phPri"));
+                Student.setParentsName((String) documentSnapshot.get("parentName"));
+                Student.setBirthday((String) documentSnapshot.get("dateOfBirth"));
+                Student.setGrade((String) documentSnapshot.get("grade"));
+                Student.setSchool(sch);
+                setVal();
 
             }
         });
